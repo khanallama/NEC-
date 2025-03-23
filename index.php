@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['user_id'])) {
-    header("Location: public/welcome.php");
+    header("Location: includes/welcome.php");
     exit();
 }
 ?>
@@ -20,13 +20,13 @@ if (isset($_SESSION['user_id'])) {
 
 <p>
     <?php if (!isset($_SESSION['user_id'])): ?>
-        <a href="public/login.php">Login</a> or <a href="public/register.php">Register</a>
+        <a href="public/login-form.php">Login</a> or <a href="public/registration-form.php">Register</a>
     <?php else: ?>
-        <a href="public/welcome.php">Go to Welcome Page</a>
+        <a href="includes/welcome.php">Go to Welcome Page</a>
     <?php endif; ?>
 </p>
 
-<script src="../assets/js/jquery.min.js"></script>
-<script src="assets/js/script.js"></script
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/script.js"></script>
 </body>
 </html>

@@ -18,6 +18,7 @@ function registerUser($username, $email, $password, $profilePicture, $connection
     $result = $connection->query($sql);
 
     if ($result->num_rows > 0) {
+        logMessage("Registration attempt with existing username or email: $email");
         return "Username or Email already exists!";
     }
 
@@ -29,6 +30,7 @@ function registerUser($username, $email, $password, $profilePicture, $connection
     if ($connection->query($sql)) {
         return null;
     } else {
+        logMessage("Database error during registration: " . $connection->error);
         return "Database error: " . $connection->error;
     }
 }
@@ -47,16 +49,18 @@ function loginUser($email, $password, $connection)
     $result = $connection->query($sql);
 
     if ($result->num_rows === 0) {
+        logMessage("Login attempt with non-existent email: $email");
         return "Email does not exist!";
     }
 
     $user = $result->fetch_assoc();
 
     if (!password_verify($password, $user['password'])) {
+        logMessage("Failed login attempt due to incorrect password: $email");
         return "Incorrect password!";
     }
 
-    session_start();
+    @session_start();
 
     session_regenerate_id(true);
 
